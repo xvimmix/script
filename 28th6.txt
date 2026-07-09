@@ -144,14 +144,14 @@ end
 
 -- Modern ESP Settings
 local ESPSettings = {
-    Enabled = false,
-    Boxes = true,
+    Enabled = true,
+    Boxes = false,
     Names = true,
     Distance = true,
     Health = true,
     Tracers = true,
-    Chams = true,
-    Skeleton = false,
+    Chams = false,
+    Skeleton = true,
     Weapon = false,
     TeamCheck = true,
     EnemyColor = Color3.fromRGB(255, 50, 50)
@@ -1433,7 +1433,7 @@ startForceTimeLoop()
 local Window = Library:CreateWindow({
     Title = "28th6 Hub",
     Center = true,
-    AutoShow = true,
+    AutoShow = false,
     TabPadding = 8,
     MenuFadeTime = 0.2
 })
@@ -1800,7 +1800,7 @@ local FlingGroup  = CombatTab:AddLeftGroupbox("Fling / Troll")
 local KillAuraGroup = CombatTab:AddLeftGroupbox("Kill Aura")
 
 local CombatState = {
-    pullEnabled = false,
+    pullEnabled = true,
     pullRadius = 80,
     pullDistance = 5,
     pullOffsetX = 0,
@@ -1810,7 +1810,7 @@ local CombatState = {
     pullLiftOffset = 1.5,
     pullMaxTargets = 1,
     pullPausedByChat = false,
-    pullControlUsername = "biendzainhatvutru",
+    pullControlUsername = "IdkOk1501",
     bangSpeed = 3,
     bangEnabled = false,
     aimbotEnabled = false,
@@ -2090,14 +2090,14 @@ local LightingGroup = VisualTab:AddRightGroupbox("Lighting")
 local CameraGroup   = VisualTab:AddRightGroupbox("Camera")
 
 -- ESP
-ESPGroup:AddToggle("ESPMaster",   { Text = "Enable ESP",             Default = false }):OnChanged(function() ESPSettings.Enabled  = Toggles.ESPMaster.Value end)
+ESPGroup:AddToggle("ESPMaster",   { Text = "Enable ESP",             Default = true }):OnChanged(function() ESPSettings.Enabled  = Toggles.ESPMaster.Value end)
 ESPGroup:AddToggle("ESPBoxes",    { Text = "Show Boxes",             Default = false }):OnChanged(function() ESPSettings.Boxes    = Toggles.ESPBoxes.Value end)
-ESPGroup:AddToggle("ESPNames",    { Text = "Show Names",             Default = false }):OnChanged(function() ESPSettings.Names    = Toggles.ESPNames.Value end)
-ESPGroup:AddToggle("ESPDist",     { Text = "Show Distance",          Default = false }):OnChanged(function() ESPSettings.Distance = Toggles.ESPDist.Value end)
-ESPGroup:AddToggle("ESPHealth",   { Text = "Show Health Bars",       Default = false }):OnChanged(function() ESPSettings.Health   = Toggles.ESPHealth.Value end)
-ESPGroup:AddToggle("ESPTracers",  { Text = "Show Tracers",           Default = false }):OnChanged(function() ESPSettings.Tracers  = Toggles.ESPTracers.Value end)
+ESPGroup:AddToggle("ESPNames",    { Text = "Show Names",             Default = true }):OnChanged(function() ESPSettings.Names    = Toggles.ESPNames.Value end)
+ESPGroup:AddToggle("ESPDist",     { Text = "Show Distance",          Default = true }):OnChanged(function() ESPSettings.Distance = Toggles.ESPDist.Value end)
+ESPGroup:AddToggle("ESPHealth",   { Text = "Show Health Bars",       Default = true }):OnChanged(function() ESPSettings.Health   = Toggles.ESPHealth.Value end)
+ESPGroup:AddToggle("ESPTracers",  { Text = "Show Tracers",           Default = true }):OnChanged(function() ESPSettings.Tracers  = Toggles.ESPTracers.Value end)
 ESPGroup:AddToggle("ESPChams",    { Text = "Show Chams (Highlight)", Default = false }):OnChanged(function() ESPSettings.Chams    = Toggles.ESPChams.Value end)
-ESPGroup:AddToggle("ESPSkeleton", { Text = "Show Skeleton",          Default = false }):OnChanged(function() ESPSettings.Skeleton = Toggles.ESPSkeleton.Value end)
+ESPGroup:AddToggle("ESPSkeleton", { Text = "Show Skeleton",          Default = true }):OnChanged(function() ESPSettings.Skeleton = Toggles.ESPSkeleton.Value end)
 ESPGroup:AddToggle("ESPWeapon",   { Text = "Show Weapon Name",       Default = false }):OnChanged(function() ESPSettings.Weapon   = Toggles.ESPWeapon.Value end)
 ESPGroup:AddDivider()
 ESPGroup:AddToggle("ESPTeamCheck", { Text = "Team Check (Skip Teammates)", Default = true }):OnChanged(function() ESPSettings.TeamCheck = Toggles.ESPTeamCheck.Value end)
