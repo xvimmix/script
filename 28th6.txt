@@ -2422,18 +2422,6 @@ KeyGroup:AddToggle("ShowKeybinds", { Text = "Show Keybinds Menu", Default = true
     end
 end)
 
--- Pull chat commands
-local function handlePullChatCommand(player, message)
-    if not player or player.Name ~= CombatState.pullControlUsername then return end
-    local normalizedMessage = string.lower(tostring(message or ""))
-    if normalizedMessage == "/stop" then CombatState.pullPausedByChat = true
-    elseif normalizedMessage == "/next" then CombatState.pullPausedByChat = false end
-end
-local function bindPullChatCommands(player)
-    player.Chatted:Connect(function(message) handlePullChatCommand(player, message) end)
-end
-Players.PlayerAdded:Connect(bindPullChatCommands)
-for _, player in ipairs(Players:GetPlayers()) do bindPullChatCommands(player) end
 
 ThemeManager:SetLibrary(Library)
 SaveManager:SetLibrary(Library)
