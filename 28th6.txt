@@ -1,75 +1,48 @@
--- =============================================
--- BIG PAINTBALL - Pull + ESP (Rayfield)
--- =============================================
+-- BIG Paintball - Pull + ESP (LinoriaLib)
 
-local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/x2Swiftz/UI-Library/main/Libraries/Rayfield%20-%20Library.lua'))()
+local repo = "https://raw.githubusercontent.com/violin-suzutsuki/LinoriaLib/main/"
+local Library = loadstring(game:HttpGet(repo .. "Library.lua"))()
 
-local Window = Rayfield:CreateWindow({
-    Name = "BIG Paintball Hub",
-    LoadingTitle = "Loading...",
-    LoadingSubtitle = "Pull + ESP",
+local Window = Library:CreateWindow({
+    Title = "BIG Paintball Hub",
+    Center = true,
+    AutoShow = true,
 })
 
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
+local MainTab = Window:AddTab("Main")
 
 local pullEnabled = false
 local pullRadius = 80
 
--- Pull Players
-local function startPull()
-    while pullEnabled do
-        local root = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-        if root then
-            for _, plr in ipairs(Players:GetPlayers()) do
-                if plr ~= LocalPlayer and plr.Character then
-                    local tRoot = plr.Character:FindFirstChild("HumanoidRootPart")
-                    if tRoot then
-                        local dist = (root.Position - tRoot.Position).Magnitude
-                        if dist <= pullRadius and dist > 5 then
-                            tRoot.CFrame = root.CFrame * CFrame.new(0, 3, -10)
+MainTab:AddToggle("PullToggle", { Text = "Pull Players", Default = true }):OnChanged(function(v)
+    pullEnabled = v
+    if v then
+        task.spawn(function()
+            while pullEnabled do
+                local root = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+                if root then
+                    for _, plr in ipairs(Players:GetPlayers()) do
+                        if plr ~= LocalPlayer and plr.Character then
+                            local tRoot = plr.Character:FindFirstChild("HumanoidRootPart")
+                            if tRoot and (root.Position - tRoot.Position).Magnitude < pullRadius then
+                                tRoot.CFrame = root.CFrame * CFrame.new(0, 4, -12)
+                            end
                         end
                     end
                 end
+                task.wait(0.04)
             end
-        end
-        task.wait(0.05)
+        end)
     end
-end
+end)
 
--- Tab
-local Main = Window:CreateTab("Main")
+MainTab:AddSlider("Radius", { Text = "Pull Radius", Default = 80, Min = 20, Max = 150 }):OnChanged(function(v)
+    pullRadius = v
+end)
 
-Main:CreateToggle({
-    Name = "🔥 Pull Players",
-    CurrentValue = false,
-    Callback = function(v)
-        pullEnabled = v
-        if v then
-            task.spawn(startPull)
-            Rayfield:Notify("Pull Activated", "Kéo người trong phạm vi " .. pullRadius .. " studs", 4483362458)
-        end
-    end,
-})
+MainTab:AddToggle("ESP", { Text = "ESP Boxes + Tracers", Default = true })
 
-Main:CreateSlider({
-    Name = "Pull Radius",
-    Range = {30, 150},
-    Increment = 5,
-    CurrentValue = 80,
-    Callback = function(v)
-        pullRadius = v
-    end,
-})
+Library:Notify("Script Loaded!", "Pull Players đã bật mặc định", 5)
 
--- ESP đơn giản
-Main:CreateToggle({
-    Name = "ESP Boxes + Tracers",
-    CurrentValue = true,
-    Callback = function(v)
-        -- ESP logic đơn giản cho BIG Paintball
-        Rayfield:Notify("ESP", "ESP đang bật (có thể không ổn định)", 4483362458)
-    end,
-})
-
-Rayfield:Notify("BIG Paintball Script", "Chúc bạn chơi vui! Dùng cẩn thận nhé", 4483362458)
+LocalPlayer = Players.LocalPlayer
+Players = game:GetService("Players")
