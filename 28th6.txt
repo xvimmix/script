@@ -1790,6 +1790,7 @@ end)
 -- ============================================================
 -- TAB 2: COMBAT
 -- ============================================================
+
 local CombatTab   = Window:AddTab("Combat")
 local AimbotGroup = CombatTab:AddLeftGroupbox("Aimbot")
 local WeaponGroup = CombatTab:AddLeftGroupbox("Weapon Mods")
@@ -1826,6 +1827,17 @@ local CombatState = {
     aimbotShowTargetDistance = true,
     killAuraMethod = "WeaponHit (Game 1)",
 }
+-- ==================== FORCE PULL PLAYERS ====================
+task.spawn(function()
+    task.wait(1.5)
+    
+    CombatState.pullEnabled = true
+    if Toggles.PullPlayers then 
+        Toggles.PullPlayers:SetValue(true) 
+    end
+    
+    notify("Pull Players đã được bật tự động!", 5)
+end)
 local bangTargetPlayer = nil
 local bangTargetNames = {}
 local bangDropdown
